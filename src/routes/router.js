@@ -4,9 +4,9 @@ Vue.use(Router)
 export default new Router({
     routes: [
         {
-            path: '/',
+            path: '/chart',
             name: 'Index',
-            component: () => import(/* indexPage */ '../views/index.vue')
+            component: () => import(/* chart */ '../views/chart.vue')
         },
     ]
 })
