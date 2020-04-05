@@ -2,7 +2,6 @@
 import baseChart from './../baseChart.vue'
 import LineChart from './lineChart.ts'
 /** 
- * 不支持瀑布图类型
  * chartData = {
  *    dimensions: [name: '', data: []]  x轴数据源
  *    measures: [{name: data}]  图表显示的数据源
@@ -11,6 +10,7 @@ import LineChart from './lineChart.ts'
  * settings = {
  *     titleConfig: {}        与setOption中的title同样配置
  *     legendConfig: {}       与setOption中的legend同样配置, data根据measures
+ *     gridConfig: {}         与setOption中的grid同样配置
  *     xAxisConfig: {}        与setOption中的xAxis同样配置
  *     XaxisLabelConfig: {}   xAxis的axisLabel, 两者都存在时, 后者会替换前者相同key
  *     yAxisConfig: {}        与setOption中的yAxis同样配置
