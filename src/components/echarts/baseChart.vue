@@ -37,8 +37,15 @@ export default {
     },
     methods: {
         init() {
+            let _this = this
             this.chart = echarts.init(this.$refs.container)
-            this.chart.setOption(this.setOPtion())    
+            this.chart.setOption(this.setOPtion())
+            if(this.chart._$handlers.click) {
+	            this.chart._$handlers.click.length = 0;
+	        };
+            this.chart.on('click', function(params) {
+                _this.$emit('handleClick', params)
+            })
         },
         setOPtion() {}
     }

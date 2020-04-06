@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pie-chart :chartData="chartData" :settings="chartSettings"></pie-chart>
+    <bar-chart :chartData="chartData" :settings="chartSettings" @handleClick="getValue"></bar-chart>
   </div>
 </template>
 <script>
@@ -21,33 +21,12 @@ export default {
           name: 'PV',
           data: [40000, 27800, 22000, 20200, 15600, 13600]
         }]
-      }
-      this.chartSettings = {
-        seriseConfig: {
-            selectedMode: 'single',
-            radius: ['50%', '70%'],
-            label: {
-            normal: {
-                show: false,
-                position: 'center'
-            },
-            emphasis: {
-                show: true,
-                textStyle: {
-                fontSize: '24',
-                fontWeight: 'bold'
-                }
-            }
-            },
-            labelLine: {
-            normal: {
-                show: false
-            }
-            },
-            avoidLabelOverlap: false
-        }
-      }
-        
+      }   
+  },
+  methods: {
+    getValue(params) {
+      console.log(params)
+    }
   }
 };
 </script>
