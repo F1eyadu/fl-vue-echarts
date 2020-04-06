@@ -22,7 +22,7 @@ const yAxis = (data = [], secondMeaAxis = '', yAxisLabelType = [], yAxisConfig =
     })
 }
 
-export default class BaseConfig implements Config {
+export default class BarEchart implements Config {
     constructor(public chartData: ChartData, public settings: any) {
 
     }
