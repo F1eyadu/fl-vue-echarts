@@ -28,33 +28,9 @@ export default {
             type: [Object, Array]
         }
     },
-    data() {
-        return {
-
-        }
-    },
-    watch: {
-        chartData: {
-            handler() {
-                this.init()
-            },
-            deep: true
-        },
-        settings: {
-            handler() {
-                this.init()
-            },
-            deep: true
-        }
-    },
     methods: {
-        hasKeys(obj) {
-            if(obj) {
-                return Object.keys(obj).length > 0
-            }
-        },
         setOPtion() {
-            return this.hasKeys(this.chartData) ? new PieChart(this.chartData, this.settings).init() : {}
+            return this.show ? new PieChart(this.chartData, this.settings).init() : {}
         }
     }
 }

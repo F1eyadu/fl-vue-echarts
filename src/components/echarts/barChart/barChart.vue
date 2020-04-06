@@ -32,43 +32,9 @@ export default {
     inheritAttrs: false,
     name: 'BarChart',
     extends: baseChart,
-    props: {
-        chartData: {
-            type: Object,
-            default: () => {}
-        },
-        settings: {
-            type: Object,
-            default: () => {}
-        }
-    },
-    data() {
-        return {
-
-        }
-    },
-    watch: {
-        chartData: {
-            handler() {
-                this.init()
-            },
-            deep: true
-        },
-        settings: {
-            handler() {
-                this.init()
-            },
-            deep: true
-        }
-    },
     methods: {
-        hasKeys(obj) {
-            if(obj) {
-                return Object.keys(obj).length > 0
-            }
-        },
         setOPtion() {
-            return this.hasKeys(this.chartData) ? new barChart(this.chartData, this.settings).init() : {}
+            return this.show ? new barChart(this.chartData, this.settings).init() : {}
         }
     }
 }
