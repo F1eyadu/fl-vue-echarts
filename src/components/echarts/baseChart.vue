@@ -86,9 +86,9 @@ export default {
     },
     mounted() {
         this.init()
-        if(this.chart) {
-            window.addEventListener('resize',_.throttle(this.chart.resize, 500))
-        }
+        window.addEventListener('resize',_.throttle(() => {
+            this.chart.resize()
+        }, 500))
     },
     methods: {
         init() {
