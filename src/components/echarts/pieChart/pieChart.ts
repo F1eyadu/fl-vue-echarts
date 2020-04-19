@@ -30,7 +30,7 @@ export default class PieChart {
             legendConfig = first&&first.legendConfig
             lengedData = Array.from(new Set(lengedData))
         }else {
-            lengedData = this.chartData.dimensions.data
+            lengedData = this.chartData.dimensions&&this.chartData.dimensions.data
             legendConfig  = this.settings.legendConfig
         }
         return Object.assign({},LEGEND, legendConfig, {data: lengedData})
@@ -64,7 +64,7 @@ export default class PieChart {
         let result
         let measures = []
         let chartData = cloneDeep(this.chartData)
-        if(Array.isArray(this.chartData)) {
+        if(Array.isArray(this.chartData)&&this.chartData.length > 0) {
             for(let i = 0; i < chartData.length; i++) {
                 let {dimensions: {data: nameData}, measures: curMeasures } = chartData[i]
                 let {seriseConfig} = this.settings[i]
@@ -84,9 +84,9 @@ export default class PieChart {
             }
         }else{
             measures = chartData.measures
-            let {data: nameData} = chartData.dimensions
+            let nameData = chartData.dimensions && chartData.dimensions.data
             let {seriseConfig} = this.settings
-            measures = measures.map(item => { // serier的data格式为[{name:'', value:''}]
+            measures = measures&&measures.map(item => { // serier的data格式为[{name:'', value:''}]
                 item.data = item.data.map((val, index) => {
                     return {
                         name: nameData[index],
@@ -97,7 +97,7 @@ export default class PieChart {
                 return item
             })
         }
-        result = measures.map( (item) => {
+        result = measures&&measures.map( (item) => {
             return {
                 center: ['40%', '50%'],
                 ...item.config,

@@ -16,7 +16,7 @@ export default class LineEchart implements Config{
     private setLegend() { // 配置legend
         let { measures } = this.chartData
         let { legendConfig } = this.settings
-        return Object.assign({},LEGEND, legendConfig, {data: measures.map( item => item.name)})
+        return Object.assign({},LEGEND, legendConfig, {data: measures&&measures.map( item => item.name)})
     }
     private setGrid(){ // 配置布局
         let { gridConfig} = this.settings
@@ -30,7 +30,7 @@ export default class LineEchart implements Config{
     setXAxis() {
         let { dimensions } = this.chartData
         let { xAxisConfig} = this.settings
-        let xAxis = Object.assign({},XAXIS, {'boundaryGap': false}, xAxisConfig, {data: dimensions.data})
+        let xAxis = Object.assign({},XAXIS, {'boundaryGap': false}, xAxisConfig, {data: dimensions&&dimensions.data})
         return xAxis
     }
     setYAxis() {
@@ -48,7 +48,7 @@ export default class LineEchart implements Config{
             measures = getPercentVal(measures)
         }
         const hasLabel = serierLabel&&Object.keys(serierLabel).length > 0
-        let result =  measures.map( (item) => {
+        let result =  measures&&measures.map( (item) => {
             let seriesItem:any = {
                 name: item.name,
                 type: 'line',

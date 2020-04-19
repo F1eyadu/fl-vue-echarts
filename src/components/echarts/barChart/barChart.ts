@@ -36,7 +36,7 @@ export default class BarEchart implements Config {
     private setLegend() { // 配置legend
         let { measures } = this.chartData
         let { legendConfig } = this.settings
-        return Object.assign({},LEGEND, legendConfig, {data: measures.map( item => item.name)})
+        return Object.assign({},LEGEND, legendConfig, {data: measures&&measures.map( item => item.name)})
     }
     private setGrid(){ // 配置布局
         let { gridConfig} = this.settings
@@ -54,7 +54,7 @@ export default class BarEchart implements Config {
             xAxis = Object.assign({},XAXIS, { axisLabel: XaxisLabelConfig})
         }
         if(direction != 'row') {
-            xAxis.data = dimensions.data
+            xAxis.data = dimensions&&dimensions.data
         }else{
             xAxis.type = 'value'
             if(percentage) {
@@ -81,7 +81,7 @@ export default class BarEchart implements Config {
             measures = getPercentVal(measures)
         }
         const hasLabel = serierLabel&&Object.keys(serierLabel).length > 0
-        let result =  measures.map( (item) => {
+        let result =  measures&&measures.map( (item) => {
             let seriesItem:any = {
                 name: item.name,
                 type:  showLine&&showLine.includes(item.name)? 'line': 'bar',

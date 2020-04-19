@@ -19,7 +19,8 @@ export default {
     inheritAttrs: false,
     data() {
         return {
-            chart: null
+            chart: null,
+            show: true
         }
     },
     props: {
@@ -46,6 +47,10 @@ export default {
         des: {
             type: String,
             default: '暂无数据'
+        },
+        loading: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -53,13 +58,6 @@ export default {
             return {
                 'width': this.chartWidth,
                 'height': this.chartHeight
-            }
-        },
-        show() {
-            if(this.chartData) {
-                return Object.keys(this.chartData).length > 0
-            }else{
-                return false
             }
         },
         nodataImg() {
@@ -85,7 +83,9 @@ export default {
         }
     },
     mounted() {
-        this.init()
+        let dom = this.$refs.container
+        this.chart = echarts.init(dom)
+        this.chart.showLoading()
         window.addEventListener('resize',_.throttle(() => {
             this.chart.resize()
         }, 500))
@@ -93,18 +93,18 @@ export default {
     methods: {
         init() {
             let _this = this
+            this.show = true
             this.$nextTick(() => {
-                let dom = this.$refs.container
-                if(dom) {
-                    this.chart = echarts.init(dom)
-                    this.chart.setOption(this.setOPtion())
-                    if(this.chart._$handlers.click) {
-                        this.chart._$handlers.click.length = 0;
-                    };
-                    this.chart.on('click', function(params) {
-                        _this.$emit('handleClick', params)
-                    })
-                }
+                this.chart.showLoading()
+                this.chart.setOption(this.setOPtion())
+                this.chart.hideLoading()
+                this.show = this.chartData&&Object.keys(this.chartData).length > 0
+                if(this.chart._$handlers.click) {
+                    this.chart._$handlers.click.length = 0;
+                };
+                this.chart.on('click', function(params) {
+                    _this.$emit('handleClick', params)
+                })
             })
         },
         setOPtion() {}
