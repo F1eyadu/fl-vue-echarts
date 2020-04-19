@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pie-chart :chartData="chartData" :settings="chartSettings" @handleClick="getValue" ref="barChart"></pie-chart>
+    <pie-chart :chartData="chartData" :settings="chartSettings" @handleClick="getValue" :loadOption="loadOption"></pie-chart>
   </div>
 </template>
 <script>
@@ -8,7 +8,14 @@ export default {
   data() {
     return {
       chartData: {},
-      chartSettings: {}
+      chartSettings: {},
+      loadOption: {
+        text: '加载中...',
+        color: '#ffff00',
+        textColor: 'red',
+        maskColor: 'rgba(255, 255, 255, 0.8)',
+        zlevel: 0
+      }
     };
   },
   mounted() {

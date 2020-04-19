@@ -48,9 +48,9 @@ export default {
             type: String,
             default: '暂无数据'
         },
-        loading: {
-            type: Boolean,
-            default: true
+        loadOption: {
+            type: Object,
+            default: () => {}
         }
     },
     computed: {
@@ -85,7 +85,7 @@ export default {
     mounted() {
         let dom = this.$refs.container
         this.chart = echarts.init(dom)
-        this.chart.showLoading()
+        this.chart.showLoading(this.loadOption)
         window.addEventListener('resize',_.throttle(() => {
             this.chart.resize()
         }, 500))
@@ -95,7 +95,7 @@ export default {
             let _this = this
             this.show = true
             this.$nextTick(() => {
-                this.chart.showLoading()
+                this.chart.showLoading(this.loadOption)
                 this.chart.setOption(this.setOPtion())
                 this.chart.hideLoading()
                 this.show = this.chartData&&Object.keys(this.chartData).length > 0
