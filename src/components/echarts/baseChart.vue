@@ -1,18 +1,17 @@
 <template>
-    <div>
-        <div >
-            <div v-if="show">
-                <div ref="container" :style="chartStyle"></div>
-            </div>
-            <div v-if="!show" :style="chartStyle" class="noData_wrapper">
-                <div :style="nodataImg" class="noData_img"></div>
-                <div>{{des}}</div>
-            </div>
+    <div ref="wrapper" class="echart_wrapper">
+        <div v-if="show">
+            <div ref="container" :style="chartStyle"></div>
+        </div>
+        <div v-if="!show" :style="chartStyle" class="noData_wrapper">
+            <div :style="nodataImg" class="noData_img"></div>
+            <div>{{des}}</div>
         </div>
     </div>
 </template>
 <script>
 import echarts from 'echarts'
+import elementResizeDetector from 'element-resize-detector'
 import nodata from '@src/images/noData.jpg'
 export default {
     name: 'baseChart',
@@ -83,14 +82,30 @@ export default {
         }
     },
     mounted() {
-        let dom = this.$refs.container
-        this.chart = echarts.init(dom)
+        this.chart = echarts.init(this.$refs.container)
         this.chart.showLoading(this.loadOption)
-        window.addEventListener('resize',_.throttle(() => {
-            this.chart.resize()
-        }, 500))
+        this.resizeCb = _.throttle(this.resizeFn, 500)
+        window.addEventListener('resize', this.resizeCb)
+        elementResizeDetector().listenTo(this.$refs.container, element => {
+            this.$nextTick(() => {
+                this.resizeFn  
+            })
+        })
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.resizeCb)
     },
     methods: {
+        resizeCb(){},
+        resizeFn() {
+            let container = $(this.$refs.wrapper)
+            let width = container.width() + 'px'
+            let height = container.height() + 'px'
+            this.chart.resize({
+                width,
+                height
+            })
+        },
         init() {
             let _this = this
             this.show = true
@@ -98,6 +113,7 @@ export default {
                 this.chart.showLoading(this.loadOption)
                 this.chart.setOption(this.setOPtion())
                 this.chart.hideLoading()
+                this.resizeFn()
                 this.show = this.chartData&&Object.keys(this.chartData).length > 0
                 if(this.chart._$handlers.click) {
                     this.chart._$handlers.click.length = 0;
@@ -121,5 +137,8 @@ export default {
         background-size: contain;
         background-repeat: no-repeat;
     }
+}
+.echart_wrapper{
+    width: 100%;
 }
 </style>

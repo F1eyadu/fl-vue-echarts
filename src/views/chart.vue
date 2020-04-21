@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pie-chart :chartData="chartData" :settings="chartSettings" @handleClick="getValue" :loadOption="loadOption"></pie-chart>
+    <bar-chart :chartData="chartData" :settings="chartSettings" @handleClick="getValue" :loadOption="loadOption"></bar-chart>
   </div>
 </template>
 <script>

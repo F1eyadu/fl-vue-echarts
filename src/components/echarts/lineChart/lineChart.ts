@@ -63,7 +63,14 @@ export default class LineEchart implements Config{
             if(hasLabel) {
                 seriesItem.label = Object.assign({},SERIESLABEL, serierLabel)
             }
-            return Object.assign({},serierConfig, {'itemStyle': serierItemStyle}, {'lineStyle': serierLineStyle}, seriesItem)
+            let seriesConf = serierConfig
+            if(serierItemStyle&&Object.keys(serierItemStyle).length > 0) {
+                seriesConf = Object.assign({}, seriesConf, {'itemStyle': serierItemStyle})
+            }
+            if(serierLineStyle&&Object.keys(serierLineStyle).length > 0) {
+                seriesConf = Object.assign({}, seriesConf, {'lineStyle': serierLineStyle})
+            }
+            return Object.assign({}, seriesConf, seriesItem)
         })
         return result
     }
